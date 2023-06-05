@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+    </PropertyGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\WFCodeGenLib\WFCodeGenLib.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+	</ItemGroup>
+    <ItemGroup>
+		<PackageReference Include="Godot.SourceGenerators" Version="4.0.2" />
+		<PackageReference Include="GodotSharp" Version="4.0.2" />
+		<PackageReference Include="Basic.Reference.Assemblies.Net70" Version="1.4.2" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" />
+        <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\WFLib\WFLib.csproj" />
+    </ItemGroup>
+	<ItemGroup>
+		<GenFiles Include="Generated\**\*.cs" />
+	</ItemGroup>
+	<Target Name="GenFixBeforeBuild" BeforeTargets="PreBuildEvent">
+		<!--<Delete Files="@(GenFiles)" />-->
+		<ItemGroup>
+			<Compile Remove="@(GenFiles)" />
+		</ItemGroup>
+	</Target>
+	<Target Name="GenFixAfterBuild" BeforeTargets="PostBuildEvent">
+		<ItemGroup>
+			<Compile Include="@(Genfiles)" />
+		</ItemGroup>
+	</Target>
+</Project>
