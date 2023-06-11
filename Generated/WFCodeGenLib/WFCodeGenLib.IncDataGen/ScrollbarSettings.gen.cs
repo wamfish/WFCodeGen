@@ -569,6 +569,8 @@ public partial class ScrollbarSettings : Data
 	public override string[] StaticTypeNames => TypeNames;
 	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[8];
 	public override List<ValidationFunc>[] StaticValidationFuncs => ValidationFuncs;
+	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[8];
+	public override Func<Data,string>[] StaticHtmlHelpers => HtmlHelpers;
 	public partial class Util : DataUtil<ScrollbarSettings>
 	{
 	}

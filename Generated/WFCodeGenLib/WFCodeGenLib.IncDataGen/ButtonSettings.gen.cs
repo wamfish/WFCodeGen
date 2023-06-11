@@ -693,6 +693,8 @@ public partial class ButtonSettings : Data
 	public override string[] StaticTypeNames => TypeNames;
 	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[12];
 	public override List<ValidationFunc>[] StaticValidationFuncs => ValidationFuncs;
+	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[12];
+	public override Func<Data,string>[] StaticHtmlHelpers => HtmlHelpers;
 	public partial class Util : DataUtil<ButtonSettings>
 	{
 	}

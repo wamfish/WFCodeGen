@@ -785,6 +785,8 @@ public partial class StyleBoxMargin : Data
 	public override string[] StaticTypeNames => TypeNames;
 	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[16];
 	public override List<ValidationFunc>[] StaticValidationFuncs => ValidationFuncs;
+	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[16];
+	public override Func<Data,string>[] StaticHtmlHelpers => HtmlHelpers;
 	public partial class Util : DataUtil<StyleBoxMargin>
 	{
 	}

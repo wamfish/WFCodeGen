@@ -202,7 +202,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\prog\\Wamfish\\WFCodeGenLib\\WFCodeGenLib.csproj": {
+                "projectPath": "C:\\prog\\Wamfish\\WFCodeGenLib\\WFCodeGenLib.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

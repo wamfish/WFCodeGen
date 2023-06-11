@@ -2,7 +2,7 @@
 //  You may use, distribute and modify this code under the terms of the MIT license.
 //  See the file License.txt in the root folder for full license details.
 namespace WFCodeGen;
-public enum LinkType : byte { None, YouTube }
+public enum LINKTYPE : byte { None, YouTube }
 public partial class Link  : Record
 {
     public string Title; 

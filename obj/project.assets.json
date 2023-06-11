@@ -950,7 +950,8 @@
           "SkiaSharp.Extended": "1.60.0",
           "SkiaSharp.NativeAssets.Linux": "2.88.3",
           "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.88.3",
-          "Svg.Skia": "0.6.0-preview6"
+          "Svg.Skia": "0.6.0-preview6",
+          "WFCodeGenLib": "1.0.0-rc3"
         },
         "compile": {
           "bin/placeholder/WFLib.dll": {}

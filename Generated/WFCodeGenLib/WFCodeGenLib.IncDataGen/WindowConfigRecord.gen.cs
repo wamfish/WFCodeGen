@@ -420,6 +420,8 @@ public partial class WindowConfigRecord : Record
 	public override string[] StaticTypeNames => TypeNames;
 	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[7];
 	public override List<ValidationFunc>[] StaticValidationFuncs => ValidationFuncs;
+	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[7];
+	public override Func<Data,string>[] StaticHtmlHelpers => HtmlHelpers;
 	public partial class Util : RecordUtil<WindowConfigRecord>
 	{
 		public static Status ReadByWindowNameKey(WindowConfigRecord data,int EditByID=-2)

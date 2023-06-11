@@ -3,22 +3,22 @@ using WFLib;
 using Godot;
 using System;
 namespace WFCodeGen;
-public partial class Blog : Record
+public partial class AppConfig : Record
 {
 	protected override void OnBaseConstruct()
 	{
 		Init();
 	}
-	public override int FieldCount => 10;
-	public Blog Rent()=>RecordFactory<Blog>.Rent();
+	public override int FieldCount => 7;
+	public AppConfig Rent()=>RecordFactory<AppConfig>.Rent();
 	public override void InitContextFactory()
 	{
 		Context.InitContextFactory();
 	}
-	~Blog() => Dispose();
+	~AppConfig() => Dispose();
 	public override void Dispose()
 	{
-		RecordFactory<Blog>.Return(this);
+		RecordFactory<AppConfig>.Return(this);
 		base.Dispose();
 	}
 	public override bool IsRecord => true;
@@ -28,12 +28,9 @@ public partial class Blog : Record
 		ID = 0;
 		Timestamp = DateTime.MinValue;
 		EditByID = 0;
-		Title = string.Empty;
-		Html = string.Empty;
-		Tags = string.Empty;
-		IsPublished = false;
-		StartDate = DateTime.MinValue;
-		StopDate = DateTime.MinValue;
+		ConfigName = string.Empty;
+		Port = string.Empty;
+		GitignoreSourceDir = string.Empty;
 		OnClear();
 	}
 	public override void Init()
@@ -42,44 +39,35 @@ public partial class Blog : Record
 		ID = 0;
 		Timestamp = DateTime.MinValue;
 		EditByID = 0;
-		Title = string.Empty;
-		Html = string.Empty;
-		Tags = string.Empty;
-		IsPublished = false;
-		StartDate = DateTime.MinValue;
-		StopDate = DateTime.MinValue;
+		ConfigName = string.Empty;
+		Port = string.Empty;
+		GitignoreSourceDir = string.Empty;
 		OnInitialize();
 	}
 	public override void CopyTo(Data toData)
 	{
-		if (!(toData is Blog to)) return;
+		if (!(toData is AppConfig to)) return;
 		to.Clear();
 		to.StatusCode = StatusCode;
 		to.ID = ID;
 		to.Timestamp = Timestamp;
 		to.EditByID = EditByID;
-		to.Title = Title;
-		to.Html = Html;
-		to.Tags = Tags;
-		to.IsPublished = IsPublished;
-		to.StartDate = StartDate;
-		to.StopDate = StopDate;
+		to.ConfigName = ConfigName;
+		to.Port = Port;
+		to.GitignoreSourceDir = GitignoreSourceDir;
 	}
 	public override void FieldCopyTo(Data toData, int field)
 	{
-		if (!(toData is Blog to)) return;
+		if (!(toData is AppConfig to)) return;
 		switch(field)
 		{
 			case 0:to.StatusCode = StatusCode; return;
 			case 1:to.ID = ID; return;
 			case 2:to.Timestamp = Timestamp; return;
 			case 3:to.EditByID = EditByID; return;
-			case 4:to.Title = Title; return;
-			case 5:to.Html = Html; return;
-			case 6:to.Tags = Tags; return;
-			case 7:to.IsPublished = IsPublished; return;
-			case 8:to.StartDate = StartDate; return;
-			case 9:to.StopDate = StopDate; return;
+			case 4:to.ConfigName = ConfigName; return;
+			case 5:to.Port = Port; return;
+			case 6:to.GitignoreSourceDir = GitignoreSourceDir; return;
 		}
 	}
 	public override void WriteToBuf(SerializationBuffer sb, bool append=false)
@@ -89,35 +77,20 @@ public partial class Blog : Record
 		sb.Write(ID);
 		sb.Write(Timestamp);
 		sb.Write(EditByID);
-		if (Title != default)
+		if (ConfigName != default)
 		{
 			sb.WriteSize(4);
-			sb.Write(Title);
+			sb.Write(ConfigName);
 		}
-		if (Html != default)
+		if (Port != default)
 		{
 			sb.WriteSize(5);
-			sb.Write(Html);
+			sb.Write(Port);
 		}
-		if (Tags != default)
+		if (GitignoreSourceDir != default)
 		{
 			sb.WriteSize(6);
-			sb.Write(Tags);
-		}
-		if (IsPublished != default)
-		{
-			sb.WriteSize(7);
-			sb.Write(IsPublished);
-		}
-		if (StartDate != default)
-		{
-			sb.WriteSize(8);
-			sb.Write(StartDate);
-		}
-		if (StopDate != default)
-		{
-			sb.WriteSize(9);
-			sb.Write(StopDate);
+			sb.Write(GitignoreSourceDir);
 		}
 		sb.WriteSize(-1);
 	}
@@ -139,37 +112,19 @@ public partial class Blog : Record
 		if (fieldIndex > maxField) return; 
 		if (fieldIndex == 4)
 		{
-			sb.Read(out Title);
+			ConfigName = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 			if (fieldIndex > maxField) return;
 		}
 		if (fieldIndex == 5)
 		{
-			sb.Read(out Html);
+			Port = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 			if (fieldIndex > maxField) return;
 		}
 		if (fieldIndex == 6)
 		{
-			sb.Read(out Tags);
-			fieldIndex = sb.ReadSize();
-			if (fieldIndex > maxField) return;
-		}
-		if (fieldIndex == 7)
-		{
-			sb.Read(out IsPublished);
-			fieldIndex = sb.ReadSize();
-			if (fieldIndex > maxField) return;
-		}
-		if (fieldIndex == 8)
-		{
-			sb.Read(out StartDate);
-			fieldIndex = sb.ReadSize();
-			if (fieldIndex > maxField) return;
-		}
-		if (fieldIndex == 9)
-		{
-			sb.Read(out StopDate);
+			GitignoreSourceDir = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 			if (fieldIndex > maxField) return;
 		}
@@ -189,32 +144,17 @@ public partial class Blog : Record
 		fieldIndex = sb.ReadSize();
 		if (fieldIndex == 4)
 		{
-			sb.Read(out Title);
+			ConfigName = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 		}
 		if (fieldIndex == 5)
 		{
-			sb.Read(out Html);
+			Port = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 		}
 		if (fieldIndex == 6)
 		{
-			sb.Read(out Tags);
-			fieldIndex = sb.ReadSize();
-		}
-		if (fieldIndex == 7)
-		{
-			sb.Read(out IsPublished);
-			fieldIndex = sb.ReadSize();
-		}
-		if (fieldIndex == 8)
-		{
-			sb.Read(out StartDate);
-			fieldIndex = sb.ReadSize();
-		}
-		if (fieldIndex == 9)
-		{
-			sb.Read(out StopDate);
+			GitignoreSourceDir = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 		}
 		OnLoad();
@@ -227,30 +167,24 @@ public partial class Blog : Record
 			case 1:return ID == default;
 			case 2:return Timestamp == default;
 			case 3:return EditByID == default;
-			case 4:return Title == string.Empty;
-			case 5:return Html == string.Empty;
-			case 6:return Tags == string.Empty;
-			case 7:return IsPublished == default;
-			case 8:return StartDate == default;
-			case 9:return StopDate == default;
+			case 4:return ConfigName == string.Empty;
+			case 5:return Port == string.Empty;
+			case 6:return GitignoreSourceDir == string.Empty;
 		}
 		return false;
 	}
 	public override bool FieldIsEqual(Data toFld, int field)
 	{
-		if (!(toFld is Blog to)) return false;
+		if (!(toFld is AppConfig to)) return false;
 		switch(field)
 		{
 			case 0:return StatusCode == to.StatusCode;
 			case 1:return ID == to.ID;
 			case 2:return Timestamp == to.Timestamp;
 			case 3:return EditByID == to.EditByID;
-			case 4:return Title == to.Title;
-			case 5:return Html == to.Html;
-			case 6:return Tags == to.Tags;
-			case 7:return IsPublished == to.IsPublished;
-			case 8:return StartDate == to.StartDate;
-			case 9:return StopDate == to.StopDate;
+			case 4:return ConfigName == to.ConfigName;
+			case 5:return Port == to.Port;
+			case 6:return GitignoreSourceDir == to.GitignoreSourceDir;
 		}
 		return false;
 	}
@@ -262,12 +196,9 @@ public partial class Blog : Record
 			case 1:return ID.AsString();
 			case 2:return Timestamp.AsString();
 			case 3:return EditByID.AsString();
-			case 4:return Title;
-			case 5:return Html;
-			case 6:return Tags;
-			case 7:return IsPublished.AsString();
-			case 8:return StartDate.AsString();
-			case 9:return StopDate.AsString();
+			case 4:return ConfigName;
+			case 5:return Port;
+			case 6:return GitignoreSourceDir;
 		}
 		return string.Empty;
 	}
@@ -279,12 +210,9 @@ public partial class Blog : Record
 			case 1:ID = str.AsInt(); return;
 			case 2:Timestamp = str.AsDateTime(); return;
 			case 3:EditByID = str.AsInt(); return;
-			case 4:Title = str; return;
-			case 5:Html = str; return;
-			case 6:Tags = str; return;
-			case 7:IsPublished = str.AsBool(); return;
-			case 8:StartDate = str.AsDateTime(); return;
-			case 9:StopDate = str.AsDateTime(); return;
+			case 4:ConfigName = str; return;
+			case 5:Port = str; return;
+			case 6:GitignoreSourceDir = str; return;
 		}
 		return;
 	}
@@ -350,12 +278,9 @@ public partial class Blog : Record
 			case 1:sb.Write(ID); return;
 			case 2:sb.Write(Timestamp); return;
 			case 3:sb.Write(EditByID); return;
-			case 4:Title.AsKey(sb, maxSize); return;
-			case 5:Html.AsKey(sb, maxSize); return;
-			case 6:Tags.AsKey(sb, maxSize); return;
-			case 7:sb.Write(IsPublished); return;
-			case 8:sb.Write(StartDate); return;
-			case 9:sb.Write(StopDate); return;
+			case 4:ConfigName.AsKey(sb, maxSize); return;
+			case 5:Port.AsKey(sb, maxSize); return;
+			case 6:GitignoreSourceDir.AsKey(sb, maxSize); return;
 		}
 	}
 	/// <summary>
@@ -369,12 +294,9 @@ public partial class Blog : Record
 			case 1:return (Object)ID;
 			case 2:return (Object)Timestamp;
 			case 3:return (Object)EditByID;
-			case 4:return (Object)Title;
-			case 5:return (Object)Html;
-			case 6:return (Object)Tags;
-			case 7:return (Object)IsPublished;
-			case 8:return (Object)StartDate;
-			case 9:return (Object)StopDate;
+			case 4:return (Object)ConfigName;
+			case 5:return (Object)Port;
+			case 6:return (Object)GitignoreSourceDir;
 		}
 		return null;
 	}
@@ -389,12 +311,9 @@ public partial class Blog : Record
 			case 1:ID = (int) o; return;
 			case 2:Timestamp = (DateTime) o; return;
 			case 3:EditByID = (int) o; return;
-			case 4:Title = (string) o; return;
-			case 5:Html = (string) o; return;
-			case 6:Tags = (string) o; return;
-			case 7:IsPublished = (bool) o; return;
-			case 8:StartDate = (DateTime) o; return;
-			case 9:StopDate = (DateTime) o; return;
+			case 4:ConfigName = (string) o; return;
+			case 5:Port = (string) o; return;
+			case 6:GitignoreSourceDir = (string) o; return;
 		}
 	}
 	/// <summary>
@@ -408,31 +327,32 @@ public partial class Blog : Record
 			case 1:return ID.GetType();
 			case 2:return Timestamp.GetType();
 			case 3:return EditByID.GetType();
-			case 4:return Title.GetType();
-			case 5:return Html.GetType();
-			case 6:return Tags.GetType();
-			case 7:return IsPublished.GetType();
-			case 8:return StartDate.GetType();
-			case 9:return StopDate.GetType();
+			case 4:return ConfigName.GetType();
+			case 5:return Port.GetType();
+			case 6:return GitignoreSourceDir.GetType();
 		}
 		return null;
 	}
-	public partial class Context : RecordContext<Blog>
+	public partial class Context : RecordContext<AppConfig>
 	{
 		protected override void OnBaseConstruct()
 		{
-			table = TableFactory<Table,Blog>.Rent();
+			table = TableFactory<Table,AppConfig>.Rent();
 		}
-		internal static void InitContextFactory() => RecordContextFactory<Blog>.SetCreateMethod(()=>new Context(),_setEditById);
+		internal static void InitContextFactory() => RecordContextFactory<AppConfig>.SetCreateMethod(()=>new Context(),_setEditById);
 		static Context()
 		{
 			InitContextFactory();
 		}
-		public static Context Rent(int EditByID=-2) => (Context) RecordContextFactory<Blog>.Rent(EditByID);
+		public static Context Rent(int EditByID=-2) => (Context) RecordContextFactory<AppConfig>.Rent(EditByID);
 		public override Table Table => (Table) table;
 		public override void Dispose()
 		{
-			RecordContextFactory<Blog>.Return(this);
+			RecordContextFactory<AppConfig>.Return(this);
+		}
+		public Status ReadByConfigNameKey(AppConfig data)
+		{
+			return Table.ConfigNameKey.Read(data,EditByID);
 		}
 	}
 	public static class FID
@@ -441,27 +361,21 @@ public partial class Blog : Record
 		public const int ID = 1;
 		public const int Timestamp = 2;
 		public const int EditByID = 3;
-		public const int Title = 4;
-		public const int Html = 5;
-		public const int Tags = 6;
-		public const int IsPublished = 7;
-		public const int StartDate = 8;
-		public const int StopDate = 9;
+		public const int ConfigName = 4;
+		public const int Port = 5;
+		public const int GitignoreSourceDir = 6;
 	}
-	static object[] Min = { (byte) 0,(int) -2147483648,(long) 0,(int) -2147483648,(int) 0,(int) 0,(int) 0,(int) 0,(long) 0,(long) 0, };
-	static object[] Max = { (byte) 255,(int) 2147483647,(long) 3155378975999999999,(int) 2147483647,(int) 0,(int) 0,(int) 0,(int) 0,(long) 3155378975999999999,(long) 3155378975999999999, };
+	static object[] Min = { (byte) 0,(int) -2147483648,(long) 0,(int) -2147483648,(int) 0,(int) 0,(int) 0, };
+	static object[] Max = { (byte) 255,(int) 2147483647,(long) 3155378975999999999,(int) 2147483647,(int) 0,(int) 0,(int) 0, };
 	static string[] FieldLabels =
 	{
 		"Status Code",
 		"ID",
 		"Timestamp",
 		"Edit By ID",
-		"Title",
-		"Html",
-		"Tags",
-		"Is Published",
-		"Start Date",
-		"Stop Date",
+		"Config Name",
+		"Port",
+		"Gitignore Source Dir",
 	};
 	static string[] ColumnLabels =
 	{
@@ -469,12 +383,9 @@ public partial class Blog : Record
 		"ID",
 		"Timestamp",
 		"Edit By ID",
-		"Title",
-		"Html",
-		"Tags",
-		"Is Published",
-		"Start Date",
-		"Stop Date",
+		"Config Name",
+		"Port",
+		"Gitignore Source Dir",
 	};
 	static Dictionary<string, int> FieldIdLookup = new()
 	{
@@ -482,12 +393,9 @@ public partial class Blog : Record
 		{ "ID", 1 },
 		{ "Timestamp", 2 },
 		{ "EditByID", 3 },
-		{ "Title", 4 },
-		{ "Html", 5 },
-		{ "Tags", 6 },
-		{ "IsPublished", 7 },
-		{ "StartDate", 8 },
-		{ "StopDate", 9 },
+		{ "ConfigName", 4 },
+		{ "Port", 5 },
+		{ "GitignoreSourceDir", 6 },
 	};
 	static string[] FieldNames =
 	{
@@ -495,12 +403,9 @@ public partial class Blog : Record
 		"ID",
 		"Timestamp",
 		"EditByID",
-		"Title",
-		"Html",
-		"Tags",
-		"IsPublished",
-		"StartDate",
-		"StopDate",
+		"ConfigName",
+		"Port",
+		"GitignoreSourceDir",
 	};
 	static string[] TypeNames =
 	{
@@ -511,19 +416,27 @@ public partial class Blog : Record
 		"string",
 		"string",
 		"string",
-		"bool",
-		"DateTime",
-		"DateTime",
 	};
 	public override string[] StaticTypeNames => TypeNames;
-	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[10];
+	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[7];
 	public override List<ValidationFunc>[] StaticValidationFuncs => ValidationFuncs;
-	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[10];
+	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[7];
 	public override Func<Data,string>[] StaticHtmlHelpers => HtmlHelpers;
-	public partial class Util : RecordUtil<Blog>
+	public partial class Util : RecordUtil<AppConfig>
 	{
+		public static Status ReadByConfigNameKey(AppConfig data,int EditByID=-2)
+		{
+			var context = (Context) RentContext(EditByID);
+			var status = context.ReadByConfigNameKey(data);
+			return status;
+		}
 	}
-	public partial class Table : Table<Blog>
+	public partial class Table : Table<AppConfig>
 	{
+		public readonly Key ConfigNameKey;
+		public Table()
+		{
+			ConfigNameKey = new Key(this,FID.ConfigName);
+		}
 	}
 }

@@ -148,6 +148,7 @@ public class CGBlazor : ICodeGenerator
             cw.line = $"ctx.DataDef.Add(ctx.{fieldName});";
         }
         cw.line = "ctx.OnInit(appState);";
+        cw.line = "ctx.ShowAllRegularFields();";
         cw.line = "return ctx;";
         cw.line = "}";
     }
