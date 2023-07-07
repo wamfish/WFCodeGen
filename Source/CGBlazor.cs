@@ -133,14 +133,17 @@ public class CGBlazor : ICodeGenerator
         if (IsRecord)
         {
             cw.line = $"ctx._DataProvider = RecordProvider<{ClassName}>.Rent(appState.UserState.User);";
+            cw.line = $"ctx._OrigData = RecordFactory<{ClassName}>.Rent();";
+            cw.line = $"ctx._Data = RecordFactory<{ClassName}>.Rent();";
         }
         else
         {
             cw.line = $"ctx._DataProvider = DataProvider<{ClassName}>.Rent();";
+            cw.line = $"ctx._OrigData = DataFactory<{ClassName}>.Rent();";
+            cw.line = $"ctx._Data = DataFactory<{ClassName}>.Rent();";
         }
         cw.line = $"ctx._DataDef = DataEditSettings<{ClassName}>.Rent();";
-        cw.line = $"ctx._OrigData = DataFactory<{ClassName}>.Rent();";
-        cw.line = $"ctx._Data = DataFactory<{ClassName}>.Rent();";
+        
         for (int i = 0; i < Data.FieldCount; i++)
         {
             var fieldName = Data.FieldName(i);

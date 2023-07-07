@@ -3,94 +3,150 @@ using WFLib;
 using Godot;
 using System;
 namespace WFCodeGen;
-public partial class AppConfig : Record
+public partial class AppConfig : Data
 {
 	protected override void OnBaseConstruct()
 	{
 		Init();
 	}
-	public override int FieldCount => 7;
-	public AppConfig Rent()=>RecordFactory<AppConfig>.Rent();
-	public override void InitContextFactory()
-	{
-		Context.InitContextFactory();
-	}
+	public override int FieldCount => 10;
+	public AppConfig Rent()=>DataFactory<AppConfig>.Rent();
 	~AppConfig() => Dispose();
 	public override void Dispose()
 	{
-		RecordFactory<AppConfig>.Return(this);
+		DataFactory<AppConfig>.Return(this);
 		base.Dispose();
 	}
-	public override bool IsRecord => true;
+	public override bool IsRecord => false;
+	public partial class DataField : DataField<AppConfig>
+	{
+		public DataField(int field)
+		{
+			Field=field;
+		}
+		public int WebServerPort => Data.WebServerPort;
+		public string WebServerAddress => Data.WebServerAddress;
+		public int WebServerTunnelPort => Data.WebServerTunnelPort;
+		public int WebServerLocalPort => Data.WebServerLocalPort;
+		public string LocalServerAddress => Data.LocalServerAddress;
+		public int LocalServerPort => Data.LocalServerPort;
+		public int LocalServerTunnelPort => Data.LocalServerTunnelPort;
+		public string TunnelKeysPassword => Data.TunnelKeysPassword;
+		public string GitignoreSourceDir => Data.GitignoreSourceDir;
+		public SERVERTYPE ServerType => Data.ServerType;
+	}
 	public override void Clear()
 	{
-		StatusCode = 0;
-		ID = 0;
-		Timestamp = DateTime.MinValue;
-		EditByID = 0;
-		ConfigName = string.Empty;
-		Port = string.Empty;
+		WebServerPort = 0;
+		WebServerAddress = string.Empty;
+		WebServerTunnelPort = 0;
+		WebServerLocalPort = 0;
+		LocalServerAddress = string.Empty;
+		LocalServerPort = 0;
+		LocalServerTunnelPort = 0;
+		TunnelKeysPassword = string.Empty;
 		GitignoreSourceDir = string.Empty;
+		ServerType = 0;
 		OnClear();
 	}
 	public override void Init()
 	{
-		StatusCode = 0;
-		ID = 0;
-		Timestamp = DateTime.MinValue;
-		EditByID = 0;
-		ConfigName = string.Empty;
-		Port = string.Empty;
+		WebServerPort = 0;
+		WebServerAddress = string.Empty;
+		WebServerTunnelPort = 0;
+		WebServerLocalPort = 0;
+		LocalServerAddress = string.Empty;
+		LocalServerPort = 0;
+		LocalServerTunnelPort = 0;
+		TunnelKeysPassword = string.Empty;
 		GitignoreSourceDir = string.Empty;
+		ServerType = 0;
 		OnInitialize();
 	}
 	public override void CopyTo(Data toData)
 	{
 		if (!(toData is AppConfig to)) return;
 		to.Clear();
-		to.StatusCode = StatusCode;
-		to.ID = ID;
-		to.Timestamp = Timestamp;
-		to.EditByID = EditByID;
-		to.ConfigName = ConfigName;
-		to.Port = Port;
+		to.WebServerPort = WebServerPort;
+		to.WebServerAddress = WebServerAddress;
+		to.WebServerTunnelPort = WebServerTunnelPort;
+		to.WebServerLocalPort = WebServerLocalPort;
+		to.LocalServerAddress = LocalServerAddress;
+		to.LocalServerPort = LocalServerPort;
+		to.LocalServerTunnelPort = LocalServerTunnelPort;
+		to.TunnelKeysPassword = TunnelKeysPassword;
 		to.GitignoreSourceDir = GitignoreSourceDir;
+		to.ServerType = ServerType;
 	}
 	public override void FieldCopyTo(Data toData, int field)
 	{
 		if (!(toData is AppConfig to)) return;
 		switch(field)
 		{
-			case 0:to.StatusCode = StatusCode; return;
-			case 1:to.ID = ID; return;
-			case 2:to.Timestamp = Timestamp; return;
-			case 3:to.EditByID = EditByID; return;
-			case 4:to.ConfigName = ConfigName; return;
-			case 5:to.Port = Port; return;
-			case 6:to.GitignoreSourceDir = GitignoreSourceDir; return;
+			case 0:to.WebServerPort = WebServerPort; return;
+			case 1:to.WebServerAddress = WebServerAddress; return;
+			case 2:to.WebServerTunnelPort = WebServerTunnelPort; return;
+			case 3:to.WebServerLocalPort = WebServerLocalPort; return;
+			case 4:to.LocalServerAddress = LocalServerAddress; return;
+			case 5:to.LocalServerPort = LocalServerPort; return;
+			case 6:to.LocalServerTunnelPort = LocalServerTunnelPort; return;
+			case 7:to.TunnelKeysPassword = TunnelKeysPassword; return;
+			case 8:to.GitignoreSourceDir = GitignoreSourceDir; return;
+			case 9:to.ServerType = ServerType; return;
 		}
 	}
 	public override void WriteToBuf(SerializationBuffer sb, bool append=false)
 	{
 		if (!append) sb.Clear();
-		sb.Write(StatusCode);
-		sb.Write(ID);
-		sb.Write(Timestamp);
-		sb.Write(EditByID);
-		if (ConfigName != default)
+		if (WebServerPort != default)
+		{
+			sb.WriteSize(0);
+			sb.Write(WebServerPort);
+		}
+		if (WebServerAddress != default)
+		{
+			sb.WriteSize(1);
+			sb.Write(WebServerAddress);
+		}
+		if (WebServerTunnelPort != default)
+		{
+			sb.WriteSize(2);
+			sb.Write(WebServerTunnelPort);
+		}
+		if (WebServerLocalPort != default)
+		{
+			sb.WriteSize(3);
+			sb.Write(WebServerLocalPort);
+		}
+		if (LocalServerAddress != default)
 		{
 			sb.WriteSize(4);
-			sb.Write(ConfigName);
+			sb.Write(LocalServerAddress);
 		}
-		if (Port != default)
+		if (LocalServerPort != default)
 		{
 			sb.WriteSize(5);
-			sb.Write(Port);
+			sb.Write(LocalServerPort);
+		}
+		if (LocalServerTunnelPort != default)
+		{
+			sb.WriteSize(6);
+			sb.Write(LocalServerTunnelPort);
+		}
+		if (TunnelKeysPassword != default)
+		{
+			sb.WriteSize(7);
+			sb.Write(TunnelKeysPassword);
 		}
 		if (GitignoreSourceDir != default)
 		{
-			sb.WriteSize(6);
+			sb.WriteSize(8);
 			sb.Write(GitignoreSourceDir);
+		}
+		if (ServerType != default)
+		{
+			sb.WriteSize(9);
+			sb.Write((byte)ServerType);
 		}
 		sb.WriteSize(-1);
 	}
@@ -102,29 +158,65 @@ public partial class AppConfig : Record
 	{
 		Clear();
 		int fieldIndex;
-		StatusCode = sb.ReadByte();
-		ID = sb.ReadInt();
-		if (maxField < 2) return; // no need to do OnLoad we are in a filter
-		Timestamp = sb.ReadDateTime();
-		if (maxField < 3) return; // no need to do OnLoad we are in a filter
-		EditByID = sb.ReadInt();
 		fieldIndex = sb.ReadSize();
 		if (fieldIndex > maxField) return; 
+		if (fieldIndex == 0)
+		{
+			WebServerPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
+		if (fieldIndex == 1)
+		{
+			WebServerAddress = sb.ReadString();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
+		if (fieldIndex == 2)
+		{
+			WebServerTunnelPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
+		if (fieldIndex == 3)
+		{
+			WebServerLocalPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
 		if (fieldIndex == 4)
 		{
-			ConfigName = sb.ReadString();
+			LocalServerAddress = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 			if (fieldIndex > maxField) return;
 		}
 		if (fieldIndex == 5)
 		{
-			Port = sb.ReadString();
+			LocalServerPort = sb.ReadInt();
 			fieldIndex = sb.ReadSize();
 			if (fieldIndex > maxField) return;
 		}
 		if (fieldIndex == 6)
 		{
+			LocalServerTunnelPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
+		if (fieldIndex == 7)
+		{
+			TunnelKeysPassword = sb.ReadString();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
+		if (fieldIndex == 8)
+		{
 			GitignoreSourceDir = sb.ReadString();
+			fieldIndex = sb.ReadSize();
+			if (fieldIndex > maxField) return;
+		}
+		if (fieldIndex == 9)
+		{
+			ServerType = (SERVERTYPE) sb.ReadByte();
 			fieldIndex = sb.ReadSize();
 			if (fieldIndex > maxField) return;
 		}
@@ -137,24 +229,55 @@ public partial class AppConfig : Record
 	{
 		Clear();
 		int fieldIndex;
-		StatusCode = sb.ReadByte();
-		ID = sb.ReadInt();
-		Timestamp = sb.ReadDateTime();
-		EditByID = sb.ReadInt();
 		fieldIndex = sb.ReadSize();
+		if (fieldIndex == 0)
+		{
+			WebServerPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+		}
+		if (fieldIndex == 1)
+		{
+			WebServerAddress = sb.ReadString();
+			fieldIndex = sb.ReadSize();
+		}
+		if (fieldIndex == 2)
+		{
+			WebServerTunnelPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+		}
+		if (fieldIndex == 3)
+		{
+			WebServerLocalPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+		}
 		if (fieldIndex == 4)
 		{
-			ConfigName = sb.ReadString();
+			LocalServerAddress = sb.ReadString();
 			fieldIndex = sb.ReadSize();
 		}
 		if (fieldIndex == 5)
 		{
-			Port = sb.ReadString();
+			LocalServerPort = sb.ReadInt();
 			fieldIndex = sb.ReadSize();
 		}
 		if (fieldIndex == 6)
 		{
+			LocalServerTunnelPort = sb.ReadInt();
+			fieldIndex = sb.ReadSize();
+		}
+		if (fieldIndex == 7)
+		{
+			TunnelKeysPassword = sb.ReadString();
+			fieldIndex = sb.ReadSize();
+		}
+		if (fieldIndex == 8)
+		{
 			GitignoreSourceDir = sb.ReadString();
+			fieldIndex = sb.ReadSize();
+		}
+		if (fieldIndex == 9)
+		{
+			ServerType = (SERVERTYPE) sb.ReadByte();
 			fieldIndex = sb.ReadSize();
 		}
 		OnLoad();
@@ -163,13 +286,16 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:return StatusCode == default;
-			case 1:return ID == default;
-			case 2:return Timestamp == default;
-			case 3:return EditByID == default;
-			case 4:return ConfigName == string.Empty;
-			case 5:return Port == string.Empty;
-			case 6:return GitignoreSourceDir == string.Empty;
+			case 0:return WebServerPort == default;
+			case 1:return WebServerAddress == string.Empty;
+			case 2:return WebServerTunnelPort == default;
+			case 3:return WebServerLocalPort == default;
+			case 4:return LocalServerAddress == string.Empty;
+			case 5:return LocalServerPort == default;
+			case 6:return LocalServerTunnelPort == default;
+			case 7:return TunnelKeysPassword == string.Empty;
+			case 8:return GitignoreSourceDir == string.Empty;
+			case 9:return ServerType == default;
 		}
 		return false;
 	}
@@ -178,13 +304,16 @@ public partial class AppConfig : Record
 		if (!(toFld is AppConfig to)) return false;
 		switch(field)
 		{
-			case 0:return StatusCode == to.StatusCode;
-			case 1:return ID == to.ID;
-			case 2:return Timestamp == to.Timestamp;
-			case 3:return EditByID == to.EditByID;
-			case 4:return ConfigName == to.ConfigName;
-			case 5:return Port == to.Port;
-			case 6:return GitignoreSourceDir == to.GitignoreSourceDir;
+			case 0:return WebServerPort == to.WebServerPort;
+			case 1:return WebServerAddress == to.WebServerAddress;
+			case 2:return WebServerTunnelPort == to.WebServerTunnelPort;
+			case 3:return WebServerLocalPort == to.WebServerLocalPort;
+			case 4:return LocalServerAddress == to.LocalServerAddress;
+			case 5:return LocalServerPort == to.LocalServerPort;
+			case 6:return LocalServerTunnelPort == to.LocalServerTunnelPort;
+			case 7:return TunnelKeysPassword == to.TunnelKeysPassword;
+			case 8:return GitignoreSourceDir == to.GitignoreSourceDir;
+			case 9:return ServerType == to.ServerType;
 		}
 		return false;
 	}
@@ -192,13 +321,16 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:return StatusCode.AsString();
-			case 1:return ID.AsString();
-			case 2:return Timestamp.AsString();
-			case 3:return EditByID.AsString();
-			case 4:return ConfigName;
-			case 5:return Port;
-			case 6:return GitignoreSourceDir;
+			case 0:return WebServerPort.AsString();
+			case 1:return WebServerAddress;
+			case 2:return WebServerTunnelPort.AsString();
+			case 3:return WebServerLocalPort.AsString();
+			case 4:return LocalServerAddress;
+			case 5:return LocalServerPort.AsString();
+			case 6:return LocalServerTunnelPort.AsString();
+			case 7:return TunnelKeysPassword;
+			case 8:return GitignoreSourceDir;
+			case 9:return ServerType.ToString();
 		}
 		return string.Empty;
 	}
@@ -206,13 +338,16 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:StatusCode = str.AsByte(); return;
-			case 1:ID = str.AsInt(); return;
-			case 2:Timestamp = str.AsDateTime(); return;
-			case 3:EditByID = str.AsInt(); return;
-			case 4:ConfigName = str; return;
-			case 5:Port = str; return;
-			case 6:GitignoreSourceDir = str; return;
+			case 0:WebServerPort = str.AsInt(); return;
+			case 1:WebServerAddress = str; return;
+			case 2:WebServerTunnelPort = str.AsInt(); return;
+			case 3:WebServerLocalPort = str.AsInt(); return;
+			case 4:LocalServerAddress = str; return;
+			case 5:LocalServerPort = str.AsInt(); return;
+			case 6:LocalServerTunnelPort = str.AsInt(); return;
+			case 7:TunnelKeysPassword = str; return;
+			case 8:GitignoreSourceDir = str; return;
+			case 9:if (!Enum.TryParse<SERVERTYPE>(str, out SERVERTYPE ServerType)) ServerType = default; return;
 		}
 		return;
 	}
@@ -274,13 +409,16 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:sb.Write(StatusCode); return;
-			case 1:sb.Write(ID); return;
-			case 2:sb.Write(Timestamp); return;
-			case 3:sb.Write(EditByID); return;
-			case 4:ConfigName.AsKey(sb, maxSize); return;
-			case 5:Port.AsKey(sb, maxSize); return;
-			case 6:GitignoreSourceDir.AsKey(sb, maxSize); return;
+			case 0:sb.Write(WebServerPort); return;
+			case 1:WebServerAddress.AsKey(sb, maxSize); return;
+			case 2:sb.Write(WebServerTunnelPort); return;
+			case 3:sb.Write(WebServerLocalPort); return;
+			case 4:LocalServerAddress.AsKey(sb, maxSize); return;
+			case 5:sb.Write(LocalServerPort); return;
+			case 6:sb.Write(LocalServerTunnelPort); return;
+			case 7:TunnelKeysPassword.AsKey(sb, maxSize); return;
+			case 8:GitignoreSourceDir.AsKey(sb, maxSize); return;
+			case 9:ServerType.ToString().AsKey(sb,maxSize); return;
 		}
 	}
 	/// <summary>
@@ -290,13 +428,16 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:return (Object)StatusCode;
-			case 1:return (Object)ID;
-			case 2:return (Object)Timestamp;
-			case 3:return (Object)EditByID;
-			case 4:return (Object)ConfigName;
-			case 5:return (Object)Port;
-			case 6:return (Object)GitignoreSourceDir;
+			case 0:return (Object)WebServerPort;
+			case 1:return (Object)WebServerAddress;
+			case 2:return (Object)WebServerTunnelPort;
+			case 3:return (Object)WebServerLocalPort;
+			case 4:return (Object)LocalServerAddress;
+			case 5:return (Object)LocalServerPort;
+			case 6:return (Object)LocalServerTunnelPort;
+			case 7:return (Object)TunnelKeysPassword;
+			case 8:return (Object)GitignoreSourceDir;
+			case 9:return (Object)ServerType;
 		}
 		return null;
 	}
@@ -307,13 +448,16 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:StatusCode = (byte) o; return;
-			case 1:ID = (int) o; return;
-			case 2:Timestamp = (DateTime) o; return;
-			case 3:EditByID = (int) o; return;
-			case 4:ConfigName = (string) o; return;
-			case 5:Port = (string) o; return;
-			case 6:GitignoreSourceDir = (string) o; return;
+			case 0:WebServerPort = (int) o; return;
+			case 1:WebServerAddress = (string) o; return;
+			case 2:WebServerTunnelPort = (int) o; return;
+			case 3:WebServerLocalPort = (int) o; return;
+			case 4:LocalServerAddress = (string) o; return;
+			case 5:LocalServerPort = (int) o; return;
+			case 6:LocalServerTunnelPort = (int) o; return;
+			case 7:TunnelKeysPassword = (string) o; return;
+			case 8:GitignoreSourceDir = (string) o; return;
+			case 9:ServerType = (SERVERTYPE) o; return;
 		}
 	}
 	/// <summary>
@@ -323,120 +467,117 @@ public partial class AppConfig : Record
 	{
 		switch(field)
 		{
-			case 0:return StatusCode.GetType();
-			case 1:return ID.GetType();
-			case 2:return Timestamp.GetType();
-			case 3:return EditByID.GetType();
-			case 4:return ConfigName.GetType();
-			case 5:return Port.GetType();
-			case 6:return GitignoreSourceDir.GetType();
+			case 0:return WebServerPort.GetType();
+			case 1:return WebServerAddress.GetType();
+			case 2:return WebServerTunnelPort.GetType();
+			case 3:return WebServerLocalPort.GetType();
+			case 4:return LocalServerAddress.GetType();
+			case 5:return LocalServerPort.GetType();
+			case 6:return LocalServerTunnelPort.GetType();
+			case 7:return TunnelKeysPassword.GetType();
+			case 8:return GitignoreSourceDir.GetType();
+			case 9:return ServerType.GetType();
 		}
 		return null;
 	}
-	public partial class Context : RecordContext<AppConfig>
+	public partial class Context : DataContext<AppConfig>
 	{
 		protected override void OnBaseConstruct()
 		{
-			table = TableFactory<Table,AppConfig>.Rent();
+			Data = DataFactory<AppConfig>.Rent();
 		}
-		internal static void InitContextFactory() => RecordContextFactory<AppConfig>.SetCreateMethod(()=>new Context(),_setEditById);
-		static Context()
-		{
-			InitContextFactory();
-		}
-		public static Context Rent(int EditByID=-2) => (Context) RecordContextFactory<AppConfig>.Rent(EditByID);
-		public override Table Table => (Table) table;
+		public static Context Rent() => (Context) DataContextFactory<AppConfig>.Rent();
 		public override void Dispose()
 		{
-			RecordContextFactory<AppConfig>.Return(this);
-		}
-		public Status ReadByConfigNameKey(AppConfig data)
-		{
-			return Table.ConfigNameKey.Read(data,EditByID);
+			DataContextFactory<AppConfig>.Return(this);
 		}
 	}
 	public static class FID
 	{
-		public const int StatusCode = 0;
-		public const int ID = 1;
-		public const int Timestamp = 2;
-		public const int EditByID = 3;
-		public const int ConfigName = 4;
-		public const int Port = 5;
-		public const int GitignoreSourceDir = 6;
+		public const int WebServerPort = 0;
+		public const int WebServerAddress = 1;
+		public const int WebServerTunnelPort = 2;
+		public const int WebServerLocalPort = 3;
+		public const int LocalServerAddress = 4;
+		public const int LocalServerPort = 5;
+		public const int LocalServerTunnelPort = 6;
+		public const int TunnelKeysPassword = 7;
+		public const int GitignoreSourceDir = 8;
+		public const int ServerType = 9;
 	}
-	static object[] Min = { (byte) 0,(int) -2147483648,(long) 0,(int) -2147483648,(int) 0,(int) 0,(int) 0, };
-	static object[] Max = { (byte) 255,(int) 2147483647,(long) 3155378975999999999,(int) 2147483647,(int) 0,(int) 0,(int) 0, };
+	static object[] Min = { (int) -2147483648,(int) 0,(int) -2147483648,(int) -2147483648,(int) 0,(int) -2147483648,(int) -2147483648,(int) 0,(int) 0,(int) 0, };
+	static object[] Max = { (int) 2147483647,(int) 0,(int) 2147483647,(int) 2147483647,(int) 0,(int) 2147483647,(int) 2147483647,(int) 0,(int) 0,(int) 0, };
 	static string[] FieldLabels =
 	{
-		"Status Code",
-		"ID",
-		"Timestamp",
-		"Edit By ID",
-		"Config Name",
-		"Port",
+		"Web Server Port",
+		"Web Server Address",
+		"Web Server Tunnel Port",
+		"Web Server Local Port",
+		"Local Server Address",
+		"Local Server Port",
+		"Local Server Tunnel Port",
+		"Tunnel Keys Password",
 		"Gitignore Source Dir",
+		"Server Type",
 	};
 	static string[] ColumnLabels =
 	{
-		"Status Code",
-		"ID",
-		"Timestamp",
-		"Edit By ID",
-		"Config Name",
-		"Port",
+		"Web Server Port",
+		"Web Server Address",
+		"Web Server Tunnel Port",
+		"Web Server Local Port",
+		"Local Server Address",
+		"Local Server Port",
+		"Local Server Tunnel Port",
+		"Tunnel Keys Password",
 		"Gitignore Source Dir",
+		"Server Type",
 	};
 	static Dictionary<string, int> FieldIdLookup = new()
 	{
-		{ "StatusCode", 0 },
-		{ "ID", 1 },
-		{ "Timestamp", 2 },
-		{ "EditByID", 3 },
-		{ "ConfigName", 4 },
-		{ "Port", 5 },
-		{ "GitignoreSourceDir", 6 },
+		{ "WebServerPort", 0 },
+		{ "WebServerAddress", 1 },
+		{ "WebServerTunnelPort", 2 },
+		{ "WebServerLocalPort", 3 },
+		{ "LocalServerAddress", 4 },
+		{ "LocalServerPort", 5 },
+		{ "LocalServerTunnelPort", 6 },
+		{ "TunnelKeysPassword", 7 },
+		{ "GitignoreSourceDir", 8 },
+		{ "ServerType", 9 },
 	};
 	static string[] FieldNames =
 	{
-		"StatusCode",
-		"ID",
-		"Timestamp",
-		"EditByID",
-		"ConfigName",
-		"Port",
+		"WebServerPort",
+		"WebServerAddress",
+		"WebServerTunnelPort",
+		"WebServerLocalPort",
+		"LocalServerAddress",
+		"LocalServerPort",
+		"LocalServerTunnelPort",
+		"TunnelKeysPassword",
 		"GitignoreSourceDir",
+		"ServerType",
 	};
 	static string[] TypeNames =
 	{
-		"byte",
-		"int",
-		"DateTime",
 		"int",
 		"string",
+		"int",
+		"int",
+		"string",
+		"int",
+		"int",
 		"string",
 		"string",
+		"SERVERTYPE",
 	};
 	public override string[] StaticTypeNames => TypeNames;
-	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[7];
+	static List<ValidationFunc>[] ValidationFuncs = new List<ValidationFunc>[10];
 	public override List<ValidationFunc>[] StaticValidationFuncs => ValidationFuncs;
-	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[7];
+	static Func<Data,string>[] HtmlHelpers = new Func<Data,string>[10];
 	public override Func<Data,string>[] StaticHtmlHelpers => HtmlHelpers;
-	public partial class Util : RecordUtil<AppConfig>
+	public partial class Util : DataUtil<AppConfig>
 	{
-		public static Status ReadByConfigNameKey(AppConfig data,int EditByID=-2)
-		{
-			var context = (Context) RentContext(EditByID);
-			var status = context.ReadByConfigNameKey(data);
-			return status;
-		}
-	}
-	public partial class Table : Table<AppConfig>
-	{
-		public readonly Key ConfigNameKey;
-		public Table()
-		{
-			ConfigNameKey = new Key(this,FID.ConfigName);
-		}
 	}
 }
